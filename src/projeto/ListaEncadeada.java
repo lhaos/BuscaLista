@@ -135,7 +135,7 @@ public class ListaEncadeada implements Iterable<String> {
 		tail = node;
 	}
 	
-	public void appendOrder(String valor){
+	public void insert(String valor){
 		boolean teste = true, igual = false;
 		Node temp = new Node();
 		temp.setDado(valor);
@@ -150,7 +150,7 @@ public class ListaEncadeada implements Iterable<String> {
 				teste = false;
 			}
 		}//feacha while
-		if(!teste && !Find(valor) && !igual && head != null){
+		if(!teste && !FindLeft(valor) && !igual && head != null){
 			Node temp_ant = iter.getPrevious();
 			temp.setNext(iter);
 			if(temp_ant != null){
@@ -179,7 +179,7 @@ public class ListaEncadeada implements Iterable<String> {
 		head = node;
 	}
 	
-	public boolean Find(String valor){
+	public boolean FindLeft(String valor){
 	      Node aux = head;
 	      for(int i = 0; aux != null; i++){
 	         if(valor.equals(aux.dado)){
@@ -192,12 +192,29 @@ public class ListaEncadeada implements Iterable<String> {
 	      return false;
 	   }
 	
+	public boolean FindRight(String valor){
+	      Node aux = tail;
+	      for(int i = 0; aux != null; i++){
+	         if(valor.equals(aux.dado)){
+	        	 num_ver = i+1;
+	            return true;
+	         }
+	         aux = aux.getPrevious();
+	      }
+	      
+	      return false;
+	   }
+	
 
 	public void print() {
 		Node iter = head;
-		while (iter != null) {
-			System.out.print(iter.dado+" ");
-			iter = iter.getNext();
+		if(iter == null){
+			System.out.print("Não há dados a serem exibidos");
+		}else{
+			while (iter != null) {
+				System.out.print(iter.dado+" ");
+				iter = iter.getNext();
+			}
 		}
 	}
 
