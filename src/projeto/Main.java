@@ -17,7 +17,7 @@ public class Main {
 	            valor = sc.next();
 	            //Insere valore no inicio da lista.
 	            try {
-	               lista.append(valor);
+	               lista.appendOrder(valor);
 	            } 
 	            catch (Exception e) {               
 	               e.printStackTrace();

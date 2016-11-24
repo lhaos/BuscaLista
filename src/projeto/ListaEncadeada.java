@@ -1,5 +1,7 @@
 package projeto;
 
+import java.awt.event.ItemEvent;
+
 public class ListaEncadeada implements Iterable<String> {
 
 	private class ListaIterator implements Iterador {
@@ -128,11 +130,43 @@ public class ListaEncadeada implements Iterable<String> {
 				anterior = node;
 			}
 			tail.setNext(node);
-			System.out.println("Caiu aq");
 			testa_head = true;
 		}
 		tail = node;
 	}
+	
+	public void appendOrder(String valor){
+		boolean teste = true, igual = false;
+		Node temp = new Node();
+		temp.setDado(valor);
+		Node iter = head;
+		while (teste && iter != null) {
+			if(Integer.parseInt(iter.dado) < Integer.parseInt(temp.dado)){
+				iter = iter.getNext();
+			}else if(Integer.parseInt(iter.dado) == Integer.parseInt(temp.dado)){
+				igual = true;
+				teste = false;
+			}else{
+				teste = false;
+			}
+		}//feacha while
+		if(!teste && !Find(valor) && !igual && head != null){
+			Node temp_ant = iter.getPrevious();
+			temp.setNext(iter);
+			if(temp_ant != null){
+				temp.setPrevious(temp_ant);
+				temp_ant.setNext(temp);
+			}else{
+				head = temp;
+			}
+			iter.setPrevious(temp);
+		}else if(igual){
+			System.out.println("Impossivel inserir numeros repetidos.");
+		}else{
+			append(valor);
+		}
+		
+	}//fecha metodo
 
 	public void pushFront(String dado) {
 		Node node = new Node();
@@ -146,17 +180,18 @@ public class ListaEncadeada implements Iterable<String> {
 	}
 	
 	public boolean Find(String valor){
-	      Node aux = tail;
+	      Node aux = head;
 	      for(int i = 0; aux != null; i++){
 	         if(valor.equals(aux.dado)){
 	        	 num_ver = i+1;
 	            return true;
 	         }
-	         aux = aux.getPrevious();
+	         aux = aux.getNext();
 	      }
 	      
 	      return false;
 	   }
+	
 
 	public void print() {
 		Node iter = head;
